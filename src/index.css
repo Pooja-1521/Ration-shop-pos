@@ -1,0 +1,107 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background-image: url('https://img.freepik.com/premium-photo/indian-beans-pulses-lentils-rice-wheat-grain-white-sunburst-sun-rays-shape-designer-container-selective-focus_466689-25477.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+
+.login-container {
+  background: linear-gradient(to bottom, #003366, #004080);
+  border-bottom: 4px solid #ff9933;
+  border-top: 4px solid #ff9933;
+}
+
+.login-card {
+  background: rgb(237, 237, 243);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.glass-card {
+  background: linear-gradient(to right, #003366, #004080);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(5, 246, 49, 0.3);
+  box-shadow: 0 8px 32px rgba(37, 25, 118, 0.1);
+}
+
+.allocation-item {
+  background: rgb(7, 2, 35);
+  border: 1px solid #e5e7eb;
+  transition: all 0.3s ease;
+}
+
+.allocation-item:hover {
+  border-color: #003366;
+  transform: translateY(-2px);
+}
+
+.member-card {
+  background: rgb(7, 2, 35);
+  border: 1px solid #e5c3a6;
+  transition: all 0.3s ease;
+}
+
+.member-card:hover {
+  border-color: #003366;
+  transform: translateY(-2px);
+}
+
+.inventory-card {
+  background: rgb(7, 2, 35);
+  border: 1px solid #e5e7eb;
+  transition: all 0.3s ease;
+}
+
+.inventory-card:hover {
+  border-color: #3c9dfe;
+  transform: translateY(-2px);
+}
+
+.transaction-card {
+  background:rgb(239, 239, 242);
+  border: 1px solid #e5e7eb;
+  transition: all 0.3s ease;
+}
+
+.transaction-card:hover {
+  border-color: #003366;
+  transform: translateY(-2px);
+}
+
+.nav-gradient {
+  background: linear-gradient(to right, #003366, #004080);
+  border-bottom: 3px solid #000000;
+}
+
+.input-field {
+  background: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  color: #1f2937;
+}
+
+.input-field:focus {
+  border-color: #006613;
+  box-shadow: 0 0 0 2px rgba(0, 51, 102, 0.2);
+}
+
+.login-button {
+  background: #0067cf;
+  transition: all 0.3s ease;
+}
+
+.login-button:hover {
+  background: #004080;
+}
+
+.add-button {
+  background: #003366;
+  transition: all 0.3s ease;
+}
+
+.add-button:hover {
+  background: #004080;
+}

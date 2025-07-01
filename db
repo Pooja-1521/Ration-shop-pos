@@ -1,0 +1,94 @@
+-- Create Families Table
+CREATE TABLE families (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  card_number VARCHAR(20) NOT NULL,
+  UNIQUE(card_number),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Create Family Members Table
+CREATE TABLE family_members (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  family_id INT,
+  name VARCHAR(255) NOT NULL,
+  FOREIGN KEY (family_id) REFERENCES families(id) ON DELETE CASCADE
+);
+
+-- Create Inventory Table
+CREATE TABLE inventory (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  item_name VARCHAR(255) NOT NULL,
+  quantity INT DEFAULT 0,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Create Stock Allocation Table
+CREATE TABLE stock_allocation (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  family_id INT,
+  member_id INT,
+  item_id INT,
+  allocated_quantity INT DEFAULT 0,
+  FOREIGN KEY (family_id) REFERENCES families(id) ON DELETE CASCADE,
+  FOREIGN KEY (member_id) REFERENCES family_members(id) ON DELETE CASCADE,
+  FOREIGN KEY (item_id) REFERENCES inventory(id) ON DELETE CASCADE
+);
+
+-- Create Transactions Table
+CREATE TABLE transactions (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  family_id INT,
+  member_name VARCHAR(255) NOT NULL,
+  transaction_date DATE NOT NULL,
+  items JSON NOT NULL,  -- Storing dispensed items as JSON
+  FOREIGN KEY (family_id) REFERENCES families(id) ON DELETE CASCADE,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Insert Sample Data for Families
+INSERT INTO families (card_number) VALUES ('123456789012'), ('987654321098');
+
+-- Insert Sample Data for Family Members
+INSERT INTO family_members (family_id, name) 
+VALUES 
+  (1, 'John Doe'), 
+  (1, 'Jane Doe'),
+  (2, 'Alice Smith'),
+  (2, 'Bob Smith');
+
+-- Insert Sample Data for Inventory Items
+INSERT INTO inventory (item_name, quantity) 
+VALUES 
+  ('Rice', 1000), 
+  ('Wheat', 500), 
+  ('Sugar', 300),
+  ('Salt', 200);
+
+-- Insert Sample Data for Stock Allocation
+INSERT INTO stock_allocation (family_id, member_id, item_id, allocated_quantity) 
+VALUES 
+  (1, 1, 1, 50),  -- 50kg of Rice allocated to John Doe
+  (1, 2, 2, 30),  -- 30kg of Wheat allocated to Jane Doe
+  (2, 3, 1, 60),  -- 60kg of Rice allocated to Alice Smith
+  (2, 4, 3, 40);  -- 40kg of Sugar allocated to Bob Smith
+
+-- Insert Sample Data for Transactions (Transaction History)
+INSERT INTO transactions (family_id, member_name, transaction_date, items) 
+VALUES 
+  (1, 'John Doe', '2025-04-16', '[{"item_name": "Rice", "quantity": 10}]'),
+  (1, 'Jane Doe', '2025-04-16', '[{"item_name": "Wheat", "quantity": 5}]'),
+  (2, 'Alice Smith', '2025-04-16', '[{"item_name": "Rice", "quantity": 15}]'),
+  (2, 'Bob Smith', '2025-04-16', '[{"item_name": "Sugar", "quantity": 20}]');
+
+-- Sample Query to Fetch Transactions
+SELECT * FROM transactions;
+
+-- Sample Query to Fetch Stock Allocations for a Specific Member (e.g., John Doe)
+SELECT f.name AS member_name, i.item_name, sa.allocated_quantity
+FROM stock_allocation sa
+JOIN family_members f ON sa.member_id = f.id
+JOIN inventory i ON sa.item_id = i.id
+WHERE f.name = 'John Doe';
+
+-- Sample Query to Fetch Current Inventory
+SELECT * FROM inventory;
